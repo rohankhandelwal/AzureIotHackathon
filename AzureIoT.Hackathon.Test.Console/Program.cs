@@ -12,7 +12,7 @@
         {
             DeviceClient dc = DeviceClient.CreateFromConnectionString(deviceConnectionString, TransportType.Amqp);
 
-            TwinWrapper tw = new TwinWrapper(dc, 0);
+            TwinWrapper tw = new TwinWrapper(dc, 1);
 
             tw.InitializeAsync().GetAwaiter().GetResult();
 
