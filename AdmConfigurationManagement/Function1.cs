@@ -32,7 +32,7 @@ namespace AdmConfigurationManagement
                 cfg.Labels = new Dictionary<string, string>() { { "AppType", "Firmware update" } };
                 if (fw.Version.Minor > 0)
                 {
-                    cfg.TargetCondition = $"properties.reported.firmware.version.major = {fw.Version.Major} AND properties.reported.firmware.version.minor = {fw.Version.Minor - 1}";
+                    cfg.TargetCondition = $"properties.reported.firmware.version.major = {fw.Version.Major} AND (properties.reported.firmware.version.minor = {fw.Version.Minor - 1} or properties.reported.firmware.version.minor = {fw.Version.Minor})";
                 }
                 else
                 {
@@ -52,7 +52,15 @@ namespace AdmConfigurationManagement
                     }
                 }
                 };
-                cfg.Metrics.Queries.Add("compliant", $"select deviceId from devices where properties.reported.firmware.version.major >= {fw.Version.Major}");
+
+                if (fw.Version.Minor > 0)
+                {
+                    cfg.Metrics.Queries.Add("compliant", $"select deviceId from devices where properties.reported.firmware.version.major > {fw.Version.Major} or (properties.reported.firmware.version.major = {fw.Version.Major} and properties.reported.firmware.version.minor >= {fw.Version.Minor})");
+                }
+                else
+                {
+                    cfg.Metrics.Queries.Add("compliant", $"select deviceId from devices where properties.reported.firmware.version.major >= {fw.Version.Major}");
+                }
                 rm.AddConfigurationAsync(cfg).GetAwaiter().GetResult();
             }
             catch(Exception ex)
