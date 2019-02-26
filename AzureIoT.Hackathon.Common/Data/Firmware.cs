@@ -1,4 +1,4 @@
-﻿namespace AzureIoT.Hackathon.Device.Client
+﻿namespace AzureIoT.Hackathon.Common.Data
 {
     using Newtonsoft.Json;
     using System;
@@ -29,16 +29,12 @@
         [JsonProperty(PropertyName = "minor")]
         public int Minor { get; set; }
 
-        [JsonProperty(PropertyName = "patch")]
-        public int Patch { get; set; }
-
         public Version Clone()
         {
             return new Version
             {
                 Major = this.Major,
                 Minor = this.Minor,
-                Patch = this.Patch,
             };
         }
 
@@ -59,11 +55,6 @@
                 return this.Minor.CompareTo(other.Minor);
             }
 
-            if (this.Patch.CompareTo(other.Patch) != 0)
-            {
-                return this.Patch.CompareTo(other.Patch);
-            }
-
             return 0;
         }
 
@@ -74,7 +65,7 @@
                 return false;
             }
 
-            return this.Major == other.Major && this.Minor == other.Minor && this.Patch == other.Patch;
+            return this.Major == other.Major && this.Minor == other.Minor;
         }
     }
 }
