@@ -54,6 +54,7 @@
             var twin = await this.deviceClient.GetTwinAsync().ConfigureAwait(false);
             this.PopulateDesiredFirmwareFromDesiredProperties(twin.Properties.Desired, true);
             await this.deviceClient.SetDesiredPropertyUpdateCallbackAsync(this.OnDesiredPropertiesChangeAsync, null);
+            this.CheckNewVersionAndApplyAsync().Fork();
         }
 
         Task OnDesiredPropertiesChangeAsync(TwinCollection desiredProperties, object userContext)

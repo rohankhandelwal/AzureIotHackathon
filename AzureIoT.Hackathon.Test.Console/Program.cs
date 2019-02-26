@@ -12,9 +12,8 @@
         {
             DeviceClient dc = DeviceClient.CreateFromConnectionString(deviceConnectionString, TransportType.Amqp);
 
-            TwinWrapper tw = new TwinWrapper(dc, 1);
-
-            tw.InitializeAsync().GetAwaiter().GetResult();
+            var dma = new DeviceManagementAgent(dc);
+            dma.InitializeAsync().GetAwaiter().GetResult();
 
             Console.WriteLine($"Press Enter to exit");
             Console.ReadLine();
