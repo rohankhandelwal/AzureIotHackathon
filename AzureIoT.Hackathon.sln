@@ -3,11 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28621.142
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureIoT.Hackathon.Device.Provisioning", "AzureIoT.Hackathon.Device.Provisioning\AzureIoT.Hackathon.Device.Provisioning.csproj", "{758694E4-15F1-4912-909A-74C4431B5EA3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureIoT.Hackathon.Device.Provisioning", "AzureIoT.Hackathon.Device.Provisioning\AzureIoT.Hackathon.Device.Provisioning.csproj", "{758694E4-15F1-4912-909A-74C4431B5EA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureIoT.Hackathon.Device.Client", "AzureIoT.Hackathon.Device.Client\AzureIoT.Hackathon.Device.Client.csproj", "{D34D04B3-AE7D-46DA-A2E0-AFC14F3AFAA0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureIoT.Hackathon.Device.Client", "AzureIoT.Hackathon.Device.Client\AzureIoT.Hackathon.Device.Client.csproj", "{D34D04B3-AE7D-46DA-A2E0-AFC14F3AFAA0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureIoT.Hackathon.Test.Console", "AzureIoT.Hackathon.Test.Console\AzureIoT.Hackathon.Test.Console.csproj", "{749608E9-1F9C-4636-8313-661C376E6F2B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureIoT.Hackathon.Test.Console", "AzureIoT.Hackathon.Test.Console\AzureIoT.Hackathon.Test.Console.csproj", "{749608E9-1F9C-4636-8313-661C376E6F2B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdmConfigurationManagement", "AdmConfigurationManagement\AdmConfigurationManagement.csproj", "{701CE0C2-C409-4FCF-95DA-8DF9B8E18827}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureIoT.Hackathon.Common", "AzureIoT.Hackathon.Common\AzureIoT.Hackathon.Common.csproj", "{07FFDF52-D001-4CF4-8989-29E569B2F960}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +31,14 @@ Global
 		{749608E9-1F9C-4636-8313-661C376E6F2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{749608E9-1F9C-4636-8313-661C376E6F2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{749608E9-1F9C-4636-8313-661C376E6F2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{701CE0C2-C409-4FCF-95DA-8DF9B8E18827}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{701CE0C2-C409-4FCF-95DA-8DF9B8E18827}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{701CE0C2-C409-4FCF-95DA-8DF9B8E18827}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{701CE0C2-C409-4FCF-95DA-8DF9B8E18827}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07FFDF52-D001-4CF4-8989-29E569B2F960}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07FFDF52-D001-4CF4-8989-29E569B2F960}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07FFDF52-D001-4CF4-8989-29E569B2F960}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07FFDF52-D001-4CF4-8989-29E569B2F960}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

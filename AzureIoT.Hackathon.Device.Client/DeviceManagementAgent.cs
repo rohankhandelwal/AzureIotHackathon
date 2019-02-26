@@ -1,5 +1,6 @@
 ﻿namespace AzureIoT.Hackathon.Device.Client
 {
+    using AzureIoT.Hackathon.Common.Data;
     using Microsoft.Azure.Devices.Client;
     using Microsoft.Azure.Devices.Shared;
     using Newtonsoft.Json;
@@ -33,11 +34,10 @@
                 currentFirmware = new Firmware
                 {
                     DownloadUrl = new Uri("https://www.example.com/fw/0.0.0.000000"),
-                    Version = new Version
+                    Version = new Common.Data.Version
                     {
                         Major = 0,
                         Minor = 0,
-                        Patch = 0,
                     }
                 };
 
