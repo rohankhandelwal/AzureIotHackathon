@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 namespace AdmConfigurationManagement
 {
     using System;
@@ -27,7 +30,7 @@ namespace AdmConfigurationManagement
 
                 Firmware fw = JsonConvert.DeserializeObject<Firmware>(fwText);
 
-                RegistryManager rm = RegistryManager.CreateFromConnectionString("HostName=spradhanscus.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=oLdeaajxU9+IfphZCr4uLL2woHPvM8zZKkGhQOqNlUw=");
+                RegistryManager rm = RegistryManager.CreateFromConnectionString("<connection string>");
                 Configuration cfg = new Configuration(SanitizeConfigName(name));
                 cfg.Labels = new Dictionary<string, string>() { { "AppType", "Firmware update" } };
                 if (fw.Version.Minor > 0)

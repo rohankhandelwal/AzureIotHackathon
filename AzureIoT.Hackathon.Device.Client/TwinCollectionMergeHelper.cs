@@ -1,4 +1,7 @@
-﻿namespace AzureIoT.Hackathon.Device.Client
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
+namespace AzureIoT.Hackathon.Device.Client
 {
     using Microsoft.Azure.Devices.Shared;
     using Newtonsoft.Json.Linq;

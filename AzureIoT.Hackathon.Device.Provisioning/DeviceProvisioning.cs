@@ -22,36 +22,12 @@ namespace AzureIoT.Hackathon.Device.Provisioning
         {
             _provThumbprint = thumbprint;
         }
-        // The Provisioning Hub IDScope.
 
-        // For this sample either:
-        // - pass this value as a command-prompt argument
-        // - set the DPS_IDSCOPE environment variable 
-        // - create a launchSettings.json (see launchSettings.json.template) containing the variable
-        private static string s_idScope = "0ne00043AE8";//Environment.GetEnvironmentVariable("DPS_IDSCOPE");
-
-        // In your Device Provisioning Service please go to "Manage enrollments" and select "Individual Enrollments".
-        // Select "Add individual enrollment" then fill in the following:
-        // Mechanism: X.509
-        // Certificate: 
-        //    You can generate a self-signed certificate by running the GenerateTestCertificate.ps1 powershell script.
-        //    Select the public key 'certificate.cer' file. ('certificate.pfx' contains the private key and is password protected.)
-        //    For production code, it is advised that you install the certificate in the CurrentUser (My) store.
-        // DeviceID: iothubx509device1
-
-        // X.509 certificates may also be used for enrollment groups.
-        // In your Device Provisioning Service please go to "Manage enrollments" and select "Enrollment Groups".
-        // Select "Add enrollment group" then fill in the following:
-        // Group name: <your  group name>
-        // Attestation Type: Certificate
-        // Certificate Type: 
-        //    choose CA certificate then link primary and secondary certificates 
-        //    OR choose Intermediate certificate and upload primary and secondary certificate files
-        // You may also change other enrollment group parameters according to your needs
+        private static string s_idScope = "<ID_SCOPE>";//Environment.GetEnvironmentVariable("DPS_IDSCOPE");
 
         private const string GlobalDeviceEndpoint = "global.azure-devices-provisioning.net";
 
-        public async Task<DeviceClient> StartProvisioning()
+        public async Task<DeviceClient> StartProvisioningAsync()
         {
             ServicePointManager
                     .ServerCertificateValidationCallback +=
@@ -67,26 +43,18 @@ namespace AzureIoT.Hackathon.Device.Provisioning
 
             using (var security = new SecurityProviderX509Certificate(certificate, myChain))
 
-            // Select one of the available transports:
-            // To optimize for size, reference only the protocols used by your application.
             using (var transport = new ProvisioningTransportHandlerHttp())
-            // using (var transport = new ProvisioningTransportHandlerHttp())
-            // using (var transport = new ProvisioningTransportHandlerMqtt(TransportFallbackType.TcpOnly))
-            // using (var transport = new ProvisioningTransportHandlerMqtt(TransportFallbackType.WebSocketOnly))
             {
-                ProvisioningDeviceClient provClient =
-                    ProvisioningDeviceClient.Create(GlobalDeviceEndpoint, s_idScope, security, transport);
+                Microsoft.Azure.Devices.Provisioning.Client.ProvisioningDeviceClient provClient =
+                    Microsoft.Azure.Devices.Provisioning.Client.ProvisioningDeviceClient.Create(GlobalDeviceEndpoint, s_idScope, security, transport);
 
-                var sample = new ProvisioningDeviceClientSample(provClient, security);
-                return sample.RunSampleAsync().GetAwaiter().GetResult();
+                var sample = new ProvisioningDeviceClient(provClient, security);
+                return sample.ProvisionDeviceAndGetClientAsync().GetAwaiter().GetResult();
             }
         }
 
         private static X509Certificate2 LoadCertificate(string thumbprint)
         {
-            //string certificatePassword = ReadCertificatePassword();
-
-            //certificateCollection.Import(s_certificateFileName, certificatePassword, X509KeyStorageFlags.UserKeySet);
             X509Store certStore = new X509Store(StoreName.My, StoreLocation.LocalMachine);
             certStore.Open(OpenFlags.ReadOnly);
             X509Certificate2Collection certCollection = certStore.Certificates.Find(

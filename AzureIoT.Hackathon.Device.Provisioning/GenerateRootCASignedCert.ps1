@@ -1,4 +1,5 @@
-﻿#$certRoot = New-SelfSignedCertificate -Type Custom -KeySpec Signature -Subject "CN=spradhanscus-iothub-root" -KeyExportPolicy Exportable -HashAlgorithm sha256 -KeyLength 2048 -CertStoreLocation "Cert:\LocalMachine\My" -KeyUsageProperty Sign -KeyUsage CertSign
+﻿# Copyright (c) Microsoft. All rights reserved.
+# Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 $caRoot = Get-ChildItem -Path Cert:\LocalMachine\My\574D9333C86537BC99070353EF1A8C8C50B0B5AE
 

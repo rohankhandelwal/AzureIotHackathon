@@ -1,22 +1,20 @@
-﻿
-using System.Threading.Tasks;
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 namespace AzureIoT.Hackathon.Test.Console
 {
-    using System.IO;
-    using System.Security.Cryptography.X509Certificates;
-    using AzureIoT.Hackathon.Device.Provisioning;
+    using System.Threading.Tasks;
     using AzureIoT.Hackathon.Device.Client;
-    using Microsoft.Azure.Devices;
-    using Microsoft.Azure.Devices.Client;
+    using AzureIoT.Hackathon.Device.Provisioning;
     using System;
     using System.Collections.Generic;
+    using System.IO;
 
     class Program
     {
         static void Main(string[] args)
         {
-
+            // Start Test for the devices in thumbprints.txt
             var thumbprints = File.ReadAllLines("thumbprints.txt");
             var taskList = new List<Task>();
             foreach (var thumbprint in thumbprints)
@@ -26,28 +24,6 @@ namespace AzureIoT.Hackathon.Test.Console
 
             Task.WaitAll(taskList.ToArray());
 
-            //RegistryManager rm = RegistryManager.CreateFromConnectionString("HostName=spradhanscus.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=oLdeaajxU9+IfphZCr4uLL2woHPvM8zZKkGhQOqNlUw=");
-            //Configuration cfg = new Configuration("firmware2");
-            //cfg.Labels = new Dictionary<string, string>() { { "AppType", "Firmware update" } };
-            //cfg.TargetCondition = "properties.reported.firmware.version.major <= 2";
-            //cfg.Content = new ConfigurationContent();
-            //cfg.Content.DeviceContent = new Dictionary<string, object>{
-            //    {
-            //        "properties.desired.firmware", new
-            //        {
-            //            version = new
-            //            {
-            //                major = 2,
-            //                minor = 0,
-            //                patch = 0,
-            //            },
-            //            url = "https://www.example.com/fw/2.0.0.000000"
-            //        }
-            //    }
-            //};
-            //cfg.Metrics.Queries.Add("compliant", "select deviceId from devices where properties.reported.firmware.version.major >= 2");
-            //rm.AddConfigurationAsync(cfg).GetAwaiter().GetResult();
-
             Console.WriteLine($"Press Enter to exit");
             Console.ReadLine();
         }
@@ -55,8 +31,8 @@ namespace AzureIoT.Hackathon.Test.Console
         public static async Task StartDeviceLifeCycle(string thumbprint)
         {
             var dps = new DeviceProvisioning(thumbprint);
-            var dc = await dps.StartProvisioning();
-            var dma = new DeviceManagementAgent(await dps.StartProvisioning());
+            var dc = await dps.StartProvisioningAsync();
+            var dma = new DeviceManagementAgent(await dps.StartProvisioningAsync());
             dma.InitializeAsync().GetAwaiter().GetResult();
         }
     }
