@@ -36,7 +36,7 @@ namespace AdmConfigurationManagement
                 }
                 else
                 {
-                    cfg.TargetCondition = $"properties.reported.firmware.version.major <= {fw.Version.Major}";
+                    cfg.TargetCondition = $"properties.reported.firmware.version.major = {fw.Version.Major - 1} or properties.reported.firmware.version.major = {fw.Version.Major}";
                 }
                 cfg.Content = new ConfigurationContent();
                 cfg.Content.DeviceContent = new Dictionary<string, object>{
@@ -52,6 +52,7 @@ namespace AdmConfigurationManagement
                     }
                 }
                 };
+                cfg.Priority = fw.Version.Major * 10 + fw.Version.Minor;
 
                 if (fw.Version.Minor > 0)
                 {

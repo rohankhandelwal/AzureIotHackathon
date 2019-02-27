@@ -47,6 +47,7 @@
 
             this.PopulateDesiredFirmwareFromDesiredProperties(twin.Properties.Desired, true);
             await this.deviceClient.SetDesiredPropertyUpdateCallbackAsync(this.OnDesiredPropertiesChangeAsync, null);
+            await this.deviceClient.UpdateReportedPropertiesAsync(this.GetReportedPropertiesPatch());
             this.CheckNewVersionAndApplyAsync().Fork();
         }
 
