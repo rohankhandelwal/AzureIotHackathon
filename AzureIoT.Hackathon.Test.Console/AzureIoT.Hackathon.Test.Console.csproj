@@ -13,6 +13,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AzureIoT.Hackathon.Device.Client\AzureIoT.Hackathon.Device.Client.csproj" />
+    <ProjectReference Include="..\AzureIoT.Hackathon.Device.Provisioning\AzureIoT.Hackathon.Device.Provisioning.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="thumbprints.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

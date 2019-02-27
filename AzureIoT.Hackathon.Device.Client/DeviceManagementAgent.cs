@@ -23,35 +23,28 @@
 
         public async Task InitializeAsync()
         {
-            try
+            Console.WriteLine($"Initialize");
+            var twin = await this.deviceClient.GetTwinAsync().ConfigureAwait(false);
+
+            if (twin != null && twin.Properties != null && twin.Properties.Reported != null &&
+                twin.Properties.Reported.Contains(FirwarePropertyName))
             {
-                string currentFwText = File.ReadAllText("firmware.txt");
-                currentFirmware = JsonConvert.DeserializeObject<Firmware>(currentFwText);
+                currentFirmware =
+                    (JObject.FromObject(twin.Properties.Reported[FirwarePropertyName])).ToObject<Firmware>();
             }
-            catch (Exception ex)
+            else
             {
-                Console.WriteLine($"Error while reading current firmware : {ex}");
                 currentFirmware = new Firmware
                 {
-                    DownloadUrl = new Uri("https://www.example.com/fw/0.0.0.000000"),
+                    DownloadUrl = new Uri("https://www.example.com/fw/0.0"),
                     Version = new Common.Data.Version
                     {
                         Major = 0,
                         Minor = 0,
                     }
                 };
-
-                try
-                {
-                    File.WriteAllText("firmware.txt", JsonConvert.SerializeObject(currentFirmware, Formatting.Indented));
-                }
-                catch (Exception iex)
-                {
-                    Console.WriteLine($"Failed to intialize current version : {iex}");
-                }
             }
 
-            var twin = await this.deviceClient.GetTwinAsync().ConfigureAwait(false);
             this.PopulateDesiredFirmwareFromDesiredProperties(twin.Properties.Desired, true);
             await this.deviceClient.SetDesiredPropertyUpdateCallbackAsync(this.OnDesiredPropertiesChangeAsync, null);
             this.CheckNewVersionAndApplyAsync().Fork();
@@ -75,6 +68,11 @@
                 return;
             }
 
+            if (this.desiredFirmware == null)
+            {
+                this.desiredFirmware = (JObject.FromObject(desired[FirwarePropertyName])).ToObject<Firmware>();
+                return;
+            }
             var firmwarePatch = JObject.FromObject(desired[FirwarePropertyName]);
             var desiredBefore = JObject.FromObject(this.desiredFirmware);
             desiredBefore.Merge(firmwarePatch, new JsonMergeSettings { MergeNullValueHandling = MergeNullValueHandling.Ignore });
@@ -99,15 +97,6 @@
                 // Run downloaded binary
                 // update currentFirmware
                 this.currentFirmware = this.desiredFirmware.Clone();
-                // write to firware.txt
-                try
-                {
-                    File.WriteAllText("firmware.txt", JsonConvert.SerializeObject(currentFirmware, Formatting.Indented));
-                }
-                catch (Exception iex)
-                {
-                    Console.WriteLine($"Failed to persist updated current version : {iex}");
-                }
 
                 // report current firmware
                 await this.deviceClient.UpdateReportedPropertiesAsync(this.GetReportedPropertiesPatch());

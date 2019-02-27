@@ -1,0 +1,7 @@
+{
+  "version": {
+    "major": 0,
+    "minor": 3
+  },
+  "url": "https://www.example.com/fw/0.3"
+}
